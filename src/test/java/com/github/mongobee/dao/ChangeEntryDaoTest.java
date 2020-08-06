@@ -1,23 +1,19 @@
 package com.github.mongobee.dao;
 
+import com.github.fakemongo.Fongo;
+import com.github.mongobee.exception.MongobeeConfigurationException;
+import com.github.mongobee.exception.MongobeeLockException;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.junit.Test;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.bson.Document;
-import org.junit.Test;
-
-import com.github.fakemongo.Fongo;
-import com.github.mongobee.exception.MongobeeConfigurationException;
-import com.github.mongobee.exception.MongobeeLockException;
-import com.mongodb.FongoMongoCollection;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
+import static org.mockito.Mockito.*;
 
 /**
  * @author lstolowski
@@ -53,9 +49,9 @@ public class ChangeEntryDaoTest {
     dao.connectMongoDb(mongoClient, DB_NAME);
 
     //then
-    verify(indexDaoMock, times(1)).createRequiredUniqueIndex(any(FongoMongoCollection.class));
+    verify(indexDaoMock, times(1)).createRequiredUniqueIndex(any(MongoCollection.class));
     // and not
-    verify(indexDaoMock, times(0)).dropIndex(any(FongoMongoCollection.class), any(Document.class));
+    verify(indexDaoMock, times(0)).dropIndex(any(MongoCollection.class), any(Document.class));
   }
 
   @Test
@@ -101,9 +97,9 @@ public class ChangeEntryDaoTest {
     dao.connectMongoDb(mongoClient, DB_NAME);
 
     //then
-    verify(indexDaoMock, times(1)).dropIndex(any(FongoMongoCollection.class), any(Document.class));
+    verify(indexDaoMock, times(1)).dropIndex(any(MongoCollection.class), any(Document.class));
     // and
-    verify(indexDaoMock, times(1)).createRequiredUniqueIndex(any(FongoMongoCollection.class));
+    verify(indexDaoMock, times(1)).createRequiredUniqueIndex(any(MongoCollection.class));
   }
 
   @Test

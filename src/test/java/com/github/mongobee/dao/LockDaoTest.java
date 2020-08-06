@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.github.fakemongo.Fongo;
-import com.mongodb.DB;
 import com.mongodb.client.MongoDatabase;
 
 /**

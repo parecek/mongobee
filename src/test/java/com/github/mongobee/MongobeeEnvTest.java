@@ -6,8 +6,7 @@ import com.github.mongobee.dao.ChangeEntryDao;
 import com.github.mongobee.dao.ChangeEntryIndexDao;
 import com.github.mongobee.resources.EnvironmentMock;
 import com.github.mongobee.test.changelogs.EnvironmentDependentTestResource;
-import com.mongodb.DB;
-import com.mongodb.MongoClientURI;
+import com.mongodb.ConnectionString;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.junit.After;
@@ -40,18 +39,14 @@ public class MongobeeEnvTest {
   @Mock
   private ChangeEntryIndexDao indexDao;
 
-  private DB fakeDb;
-
   private MongoDatabase fakeMongoDatabase;
 
   @Before
   public void init() throws Exception {
-    fakeDb = new Fongo("testServer").getDB("mongobeetest");
     fakeMongoDatabase = new Fongo("testServer").getDatabase("mongobeetest");
 
-    when(dao.connectMongoDb(any(MongoClientURI.class), anyString()))
+    when(dao.connectMongoDb(any(ConnectionString.class), anyString()))
         .thenReturn(fakeMongoDatabase);
-    when(dao.getDb()).thenReturn(fakeDb);
     when(dao.getMongoDatabase()).thenReturn(fakeMongoDatabase);
     when(dao.acquireProcessLock()).thenReturn(true);
     doCallRealMethod().when(dao).save(any(ChangeEntry.class));
@@ -76,7 +71,7 @@ public class MongobeeEnvTest {
 
     // then
     long change1 = fakeMongoDatabase.getCollection(CHANGELOG_COLLECTION_NAME)
-        .count(new Document()
+        .countDocuments(new Document()
             .append(ChangeEntry.KEY_CHANGEID, "Envtest1")
             .append(ChangeEntry.KEY_AUTHOR, "testuser"));
     assertEquals(1, change1);
@@ -95,7 +90,7 @@ public class MongobeeEnvTest {
 
     // then
     long change1 = fakeMongoDatabase.getCollection(CHANGELOG_COLLECTION_NAME)
-        .count(new Document()
+        .countDocuments(new Document()
             .append(ChangeEntry.KEY_CHANGEID, "Envtest1")
             .append(ChangeEntry.KEY_AUTHOR, "testuser"));
     assertEquals(1, change1);
@@ -105,8 +100,7 @@ public class MongobeeEnvTest {
   @After
   public void cleanUp() {
     runner.setMongoTemplate(null);
-    runner.setJongo(null);
-    fakeDb.dropDatabase();
+    fakeMongoDatabase.drop();
   }
 
 }

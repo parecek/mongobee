@@ -1,23 +1,19 @@
 package com.github.mongobee.dao;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+import com.github.fakemongo.Fongo;
+import com.github.mongobee.changeset.ChangeEntry;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.github.fakemongo.Fongo;
-import com.github.mongobee.changeset.ChangeEntry;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author lstolowski
