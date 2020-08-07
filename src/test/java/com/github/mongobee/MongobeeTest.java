@@ -3,7 +3,6 @@ package com.github.mongobee;
 import java.net.UnknownHostException;
 import java.util.Collections;
 
-import com.github.fakemongo.Fongo;
 import com.github.mongobee.changeset.ChangeEntry;
 import com.github.mongobee.dao.ChangeEntryDao;
 import com.github.mongobee.dao.ChangeEntryIndexDao;
@@ -25,7 +24,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -45,19 +43,19 @@ public class MongobeeTest {
 
   @Before
   public void init() throws MongobeeException, UnknownHostException {
-    fakeMongoDatabase = new Fongo("testServer").getDatabase("mongobeetest");
-    when(dao.connectMongoDb(any(ConnectionString.class), anyString()))
-        .thenReturn(fakeMongoDatabase);
-    when(dao.getMongoDatabase()).thenReturn(fakeMongoDatabase);
-    doCallRealMethod().when(dao).save(any(ChangeEntry.class));
-    doCallRealMethod().when(dao).setChangelogCollectionName(anyString());
-    doCallRealMethod().when(dao).setIndexDao(any(ChangeEntryIndexDao.class));
-    dao.setIndexDao(indexDao);
-    dao.setChangelogCollectionName(CHANGELOG_COLLECTION_NAME);
-
-    runner.setDbName("mongobeetest");
-    runner.setEnabled(true);
-    runner.setChangeLogsScanPackage(MongobeeTestResource.class.getPackage().getName());
+//    fakeMongoDatabase = new Fongo("testServer").getDatabase("mongobeetest");
+//    when(dao.connectMongoDb(any(ConnectionString.class), anyString()))
+//        .thenReturn(fakeMongoDatabase);
+//    when(dao.getMongoDatabase()).thenReturn(fakeMongoDatabase);
+//    doCallRealMethod().when(dao).save(any(ChangeEntry.class));
+//    doCallRealMethod().when(dao).setChangelogCollectionName(anyString());
+//    doCallRealMethod().when(dao).setIndexDao(any(ChangeEntryIndexDao.class));
+//    dao.setIndexDao(indexDao);
+//    dao.setChangelogCollectionName(CHANGELOG_COLLECTION_NAME);
+//
+//    runner.setDbName("mongobeetest");
+//    runner.setEnabled(true);
+//    runner.setChangeLogsScanPackage(MongobeeTestResource.class.getPackage().getName());
   }
 
   @Test(expected = MongobeeConfigurationException.class)

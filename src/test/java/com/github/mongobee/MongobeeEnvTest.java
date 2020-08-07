@@ -1,12 +1,10 @@
 package com.github.mongobee;
 
-import com.github.fakemongo.Fongo;
 import com.github.mongobee.changeset.ChangeEntry;
 import com.github.mongobee.dao.ChangeEntryDao;
 import com.github.mongobee.dao.ChangeEntryIndexDao;
 import com.github.mongobee.resources.EnvironmentMock;
 import com.github.mongobee.test.changelogs.EnvironmentDependentTestResource;
-import com.mongodb.ConnectionString;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.junit.After;
@@ -19,8 +17,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.when;
 
 /**
@@ -43,20 +39,20 @@ public class MongobeeEnvTest {
 
   @Before
   public void init() throws Exception {
-    fakeMongoDatabase = new Fongo("testServer").getDatabase("mongobeetest");
-
-    when(dao.connectMongoDb(any(ConnectionString.class), anyString()))
-        .thenReturn(fakeMongoDatabase);
-    when(dao.getMongoDatabase()).thenReturn(fakeMongoDatabase);
-    when(dao.acquireProcessLock()).thenReturn(true);
-    doCallRealMethod().when(dao).save(any(ChangeEntry.class));
-    doCallRealMethod().when(dao).setChangelogCollectionName(anyString());
-    doCallRealMethod().when(dao).setIndexDao(any(ChangeEntryIndexDao.class));
-    dao.setIndexDao(indexDao);
-    dao.setChangelogCollectionName(CHANGELOG_COLLECTION_NAME);
-
-    runner.setDbName("mongobeetest");
-    runner.setEnabled(true);
+//    fakeMongoDatabase = new Fongo("testServer").getDatabase("mongobeetest");
+//
+//    when(dao.connectMongoDb(any(ConnectionString.class), anyString()))
+//        .thenReturn(fakeMongoDatabase);
+//    when(dao.getMongoDatabase()).thenReturn(fakeMongoDatabase);
+//    when(dao.acquireProcessLock()).thenReturn(true);
+//    doCallRealMethod().when(dao).save(any(ChangeEntry.class));
+//    doCallRealMethod().when(dao).setChangelogCollectionName(anyString());
+//    doCallRealMethod().when(dao).setIndexDao(any(ChangeEntryIndexDao.class));
+//    dao.setIndexDao(indexDao);
+//    dao.setChangelogCollectionName(CHANGELOG_COLLECTION_NAME);
+//
+//    runner.setDbName("mongobeetest");
+//    runner.setEnabled(true);
   }  // TODO code duplication
 
   @Test
